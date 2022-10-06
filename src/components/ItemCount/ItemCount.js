@@ -15,20 +15,20 @@ const ItemCount = ({ pokemon, stock, initial }) => {
 	};
 
 	return (
-		<div className="col-3 border">
-			<h2 className="text-danger">{pokemon.name?.toUpperCase()}</h2>
-			<img src="" />
-			<div className="d-flex justify-content-center">
-				<button onClick={decrement} type="button" className="btn btn-light">
-					-
-				</button>
-				<h3 className="mx-4">{count}</h3>
-				<button onClick={increment} type="button" className="btn btn-light">
-					+
-				</button>
+		<div className="bg-light w-25 mx-5 d-flex flex-column justify-content-around align-items-center">
+			<div className="">
+				<div className="d-flex">
+					<button onClick={decrement} type="button" className="btn btn-light">
+						-
+					</button>
+					<h2 className="mx-4 ">{count}</h2>
+					<button onClick={increment} type="button" className="btn btn-light">
+						+
+					</button>
+				</div>
+				<div className="d-flex justify-content-center">Stock {stock}</div>
 			</div>
 			<div>
-				<p>Stock {stock}</p>
 				<button
 					onClick={onAdd}
 					type="button"
