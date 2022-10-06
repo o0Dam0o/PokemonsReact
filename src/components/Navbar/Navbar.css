@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;}
+@font-face {
+    font-family: pokemons;
+    src: url(./assets/fonts/Pokemon\ Solid.ttf);
+}
+.logo {
+    font-family: pokemons;
+    color:rgb(210, 0, 26);
+}
+li{
+    margin:0px 30px;
+}
+ul{
+    margin-bottom: 0px !important;
+}
