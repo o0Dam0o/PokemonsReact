@@ -29,13 +29,20 @@ const Items = ({ pokemons }) => {
 						<div
 							style={{
 								border: "1px dashed black",
-								color: `${x === 0 ? color1 : color2}`,
 								margin: 4,
 								padding: "2px 20px",
 							}}
 							key={p.type.name}
 						>
-							{p.type.name.toUpperCase()}
+							<Link
+								to={`/type/${p.type.name}`}
+								style={{
+									textDecoration: "none",
+									color: `${x === 0 ? color1 : color2}`,
+								}}
+							>
+								{p.type.name.toUpperCase()}
+							</Link>
 						</div>
 					);
 				})}
@@ -49,7 +56,13 @@ const Items = ({ pokemons }) => {
 						marginBottom: 5,
 					}}
 				>
-					<Link to={`/pokemon/${pokemons.id}`}>Mas Informacion</Link>
+					<Link
+						className="text-dark"
+						to={`/pokemon/${pokemons.id}`}
+						style={{ textDecoration: "none" }}
+					>
+						Mas Informacion
+					</Link>
 				</button>
 			</div>
 		</div>

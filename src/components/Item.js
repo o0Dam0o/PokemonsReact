@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getSearch } from "../asyncMock";
 import ItemFinal from "./itemFinal";
-export { getSearch } from "../asyncMock";
 
 const Item = () => {
 	const [loading, setLoading] = useState(false);
@@ -14,7 +13,6 @@ const Item = () => {
 		const data = await getSearch(pokemonId);
 		setPokemons(data);
 	};
-	console.log(pokemons);
 	useEffect(() => {
 		getFetch();
 		setTimeout(() => {

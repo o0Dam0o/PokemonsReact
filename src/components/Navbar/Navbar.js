@@ -14,11 +14,25 @@ const Navbar = ({ OnSearch }) => {
 					<img src={logo} alt="Logo" style={{ width: 70 }}></img>
 					<h1 className="logo ">PokeStore</h1>
 				</div>
-				<ul className="d-flex">
+				<ul className="d-flex ">
 					<li>
-						<Link to={"/"}>Inicio</Link>
+						<Link
+							to={"/"}
+							style={{ textDecoration: "none" }}
+							className="text-dark"
+						>
+							Inicio
+						</Link>
 					</li>
-					<li>Tipos</li>
+					<li>
+						<Link
+							to={"/type"}
+							style={{ textDecoration: "none" }}
+							className="text-dark link-dark"
+						>
+							Tipos
+						</Link>
+					</li>
 					<li>Generacion</li>
 					<li>Legendarios</li>
 					<CartWidget />

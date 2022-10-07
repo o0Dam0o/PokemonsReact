@@ -1,10 +1,13 @@
 export const getSearch = async (pokemon) => {
 	const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 	const data = await resp.json();
-	console.log(data);
 	return data;
 };
-
+export const getType = async (type) => {
+	const resp = await fetch(`https://pokeapi.co/api/v2/${type}`);
+	const data = await resp.json();
+	return data;
+};
 export const getPokemons = async (pokemon) => {
 	const resp = await fetch(pokemon);
 	const data = await resp.json();

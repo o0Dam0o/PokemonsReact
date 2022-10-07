@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const SearchBar = ({ OnSearch }) => {
+	const { pokemonID } = useParams();
 	const [search, setSearch] = useState("");
 	const onChange = (e) => {
 		setSearch(e.target.value);
-		e.target.value.length === 0 && OnSearch(null);
 	};
 	const onClick = (e) => {
-		OnSearch(search.toLowerCase());
+		return <Link to={`/pokemon/${pokemonID}`}>{search}</Link>;
 	};
 	return (
 		<div className="d-flex" role="search">
