@@ -1,14 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
-const SearchBar = ({ OnSearch }) => {
-	const { pokemonID } = useParams();
+import { useState, useContext } from "react";
+import { SearchContex } from "../context/SearchContex";
+const SearchBar = () => {
+	const { getSearch } = useContext(SearchContex);
 	const [search, setSearch] = useState("");
+
 	const onChange = (e) => {
 		setSearch(e.target.value);
-	};
-	const onClick = (e) => {
-		return <Link to={`/pokemon/${pokemonID}`}>{search}</Link>;
 	};
 	return (
 		<div className="d-flex" role="search">
@@ -19,7 +16,13 @@ const SearchBar = ({ OnSearch }) => {
 				placeholder="Buscar Pokemons.."
 				aria-label="Search"
 			/>
-			<button className="btn btn-danger" onClick={onClick} type="submit">
+			<button
+				className="btn btn-danger"
+				onClick={
+					search.length === 0 ? getSearch(search) : () => getSearch(search)
+				}
+				type="submit"
+			>
 				Buscar
 			</button>
 		</div>

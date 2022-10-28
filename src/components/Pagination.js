@@ -1,24 +1,33 @@
-const Pagination = ({ pagina, setPagina, paginaTotal }) => {
+import { Link } from "react-router-dom";
+const Pagination = ({ pagina, setPagina, paginaTotal, pokedexId }) => {
 	const onClickLeft = () => {
 		pagina > 0 && setPagina(pagina - 1);
 	};
 	const onClickRight = () => {
-		pagina < paginaTotal - 1 && setPagina(pagina + 1);
+		pagina < paginaTotal && setPagina(pagina + 1);
 	};
 
 	return (
 		<div className="d-flex justify-content-around">
 			<h2>Pokedex</h2>
 			<div className="d-flex align-items-center">
-				<button className="btn btn-danger" onClick={onClickLeft}>
+				<Link
+					to={`/${pagina}`}
+					className="btn btn-danger"
+					onClick={onClickLeft}
+				>
 					Previous
-				</button>
+				</Link>
 				<div className="mx-3">
-					{pagina + 1} de {paginaTotal}
+					{!pokedexId ? 0 : pokedexId} de {paginaTotal - 1}
 				</div>
-				<button className="btn btn-danger" onClick={onClickRight}>
+				<Link
+					to={`/${pagina + 1}`}
+					className="btn btn-danger"
+					onClick={onClickRight}
+				>
 					Next
-				</button>
+				</Link>
 			</div>
 		</div>
 	);

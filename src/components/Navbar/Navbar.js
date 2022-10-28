@@ -2,39 +2,67 @@ import logo from "./assets/charizard-logo.svg";
 import CartWidget from "../CartWidget/CartWidget";
 import "./Navbar.css";
 import SearchBar from "../SearchBar";
-import { Link } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { Legendarios } from "../../asyncMock";
 const Navbar = ({ OnSearch }) => {
+	const location = useLocation();
 	return (
 		<nav className="">
 			<div
 				className="d-flex justify-content-evenly align-items-center bg-light bg-gradient
  "
 			>
-				<div className="d-flex border-top-0 border-bottom-0 border border-danger px-3">
-					<img src={logo} alt="Logo" style={{ width: 70 }}></img>
-					<h1 className="logo ">PokeStore</h1>
-				</div>
+				<NavLink
+					to={"/"}
+					style={{ textDecoration: "none" }}
+					className="text-dark"
+				>
+					<div className="d-flex border-top-0 border-bottom-0 border border-danger px-3">
+						<img src={logo} alt="Logo" style={{ width: 70 }}></img>
+						<h1 className="logo ">PokeStore</h1>
+					</div>
+				</NavLink>
 				<ul className="d-flex ">
 					<li>
-						<Link
-							to={"/"}
-							style={{ textDecoration: "none" }}
-							className="text-dark"
+						<NavLink
+							to="/"
+							style={{ textDecoration: "none", color: "black" }}
+							className={
+								location.pathname === "/"
+									? "border-bottom border-2 border-danger"
+									: "border border-0"
+							}
 						>
 							Inicio
-						</Link>
+						</NavLink>
 					</li>
 					<li>
-						<Link
+						<NavLink
 							to={"/type"}
-							style={{ textDecoration: "none" }}
-							className="text-dark link-dark"
+							style={{ textDecoration: "none", color: "black" }}
+							className={({ isActive }) =>
+								isActive
+									? "border-bottom border-2 border-danger"
+									: "border border-0"
+							}
 						>
 							Tipos
-						</Link>
+						</NavLink>
 					</li>
-					<li>Generacion</li>
-					<li>Legendarios</li>
+					<li>
+						<NavLink
+							style={{ textDecoration: "none", color: "black" }}
+							to={"/legendarios"}
+							className={
+								location.pathname === "/legendarios" ||
+								Legendarios.includes(location.pathname.slice(9))
+									? "border-bottom border-2 border-danger"
+									: "border border-0"
+							}
+						>
+							Legendarios
+						</NavLink>
+					</li>
 					<CartWidget />
 				</ul>
 				<SearchBar OnSearch={OnSearch} />

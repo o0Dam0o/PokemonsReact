@@ -1,28 +1,41 @@
 import { colorTipos } from "../asyncMock";
 import { Link } from "react-router-dom";
+import { Legendarios } from "../asyncMock";
 const Items = ({ pokemons }) => {
-	const color1 = colorTipos[pokemons.types[0].type.name];
-	const color2 = pokemons.types[1]
-		? colorTipos[pokemons.types[1].type.name]
-		: colorTipos.default;
 	return (
 		<div
-			className="d-flex flex-column m-2 border justify-content-between w-10 align-items-center"
-			style={{ width: 290 }}
+			className={`d-flex flex-column m-2 border justify-content-between w-10 align-items-center ${
+				Legendarios.includes(pokemons.name) && "bg-warning"
+			}`}
+			style={{
+				width: 290,
+				background: `${
+					Legendarios.includes(pokemons.name) &&
+					`linear-gradient(87deg, rgba(180,58,58,1) 3%, rgba(255,222,0,1) 46%, rgba(252,130,69,1) 90%)`
+				}`,
+			}}
 		>
 			<div className="d-flex justify-content-center my-2">
 				<div className="mx-2">#{pokemons.id}</div>
 				<div className="">{pokemons.name.toUpperCase()}</div>
 			</div>
-			<div
-				className="mx-4 border rounded-5 "
-				style={{
-					background: `radial-gradient(${color2} 33%, ${color1} 33%)0% 0% /5px 5px`,
-					padding: "0 30px",
-				}}
-			>
-				<img src={pokemons.sprites.front_default} alt={pokemons.name} />
-			</div>
+			{pokemons && (
+				<div
+					className="mx-4 border rounded-5 "
+					style={{
+						background: `radial-gradient(${
+							pokemons?.types[1]
+								? colorTipos[pokemons.types[1].type.name]
+								: colorTipos.default
+						} 33%, ${
+							colorTipos[pokemons.types[0].type.name]
+						} 33%)0% 0% /5px 5px`,
+						padding: "0 30px",
+					}}
+				>
+					<img src={pokemons.sprites.front_default} alt={pokemons.name} />
+				</div>
+			)}
 			<div className="mx-4 d-flex justify-content-center">
 				{pokemons.types.map((p, x) => {
 					return (
@@ -38,7 +51,13 @@ const Items = ({ pokemons }) => {
 								to={`/type/${p.type.name}`}
 								style={{
 									textDecoration: "none",
-									color: `${x === 0 ? color1 : color2}`,
+									color: `${
+										x === 0
+											? colorTipos[pokemons.types[0].type.name]
+											: pokemons.types[1]
+											? colorTipos[pokemons.types[1].type.name]
+											: colorTipos.default
+									}`,
 								}}
 							>
 								{p.type.name.toUpperCase()}
@@ -58,7 +77,7 @@ const Items = ({ pokemons }) => {
 				>
 					<Link
 						className="text-dark"
-						to={`/pokemon/${pokemons.id}`}
+						to={`/pokemon/${pokemons.name}`}
 						style={{ textDecoration: "none" }}
 					>
 						Mas Informacion

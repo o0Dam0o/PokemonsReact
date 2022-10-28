@@ -19,17 +19,18 @@ const Item = () => {
 			setLoading(true);
 		}, 400);
 	}, [pokemonId]);
+	if (!loading) {
+		return (
+			<div className="position-absolute top-50 start-50 translate-middle">
+				<div className="spinner-border text-danger " role="status">
+					<span className="visually-hidden">Loading...</span>
+				</div>
+			</div>
+		);
+	}
 	return (
 		<div>
-			{loading ? (
-				<ItemFinal pokemons={pokemons} />
-			) : (
-				<div className="position-absolute top-50 start-50 translate-middle">
-					<div className="spinner-border text-danger " role="status">
-						<span className="visually-hidden">Loading...</span>
-					</div>
-				</div>
-			)}
+			<ItemFinal pokemons={pokemons} />
 		</div>
 	);
 };

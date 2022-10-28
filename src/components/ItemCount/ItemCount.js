@@ -1,17 +1,12 @@
 import { useState } from "react";
-const ItemCount = ({ pokemon, stock, initial }) => {
+const ItemCount = ({ stock, initial, handleOnAdd }) => {
 	const [count, setState] = useState(initial);
 	const decrement = () => {
-		count > 1 && setState(count - 1);
+		count > 0 && setState(count - 1);
 	};
 
 	const increment = () => {
 		count < stock && setState(count + 1);
-	};
-	const onAdd = () => {
-		count !== 0
-			? console.log(`Se agregaron ${count} de ${pokemon.name}`)
-			: console.log(`No se puede agregar ${count}/unidades de ${pokemon.name}`);
 	};
 
 	return (
@@ -21,16 +16,16 @@ const ItemCount = ({ pokemon, stock, initial }) => {
 					<button onClick={decrement} type="button" className="btn btn-light">
 						-
 					</button>
-					<h2 className="mx-4 ">{count}</h2>
+					<h2 className="mx-4">{count}</h2>
 					<button onClick={increment} type="button" className="btn btn-light">
 						+
 					</button>
 				</div>
-				<div className="d-flex justify-content-center">Stock {stock}</div>
+				<div className="d-flex justify-content-center my-4">Stock {stock}</div>
 			</div>
 			<div>
 				<button
-					onClick={onAdd}
+					onClick={() => handleOnAdd(count)}
 					type="button"
 					className="btn btn-dark"
 					disabled={stock === 0 && true}

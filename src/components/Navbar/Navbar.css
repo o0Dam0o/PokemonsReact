@@ -7,6 +7,12 @@
     font-family: pokemons;
     src: url(./assets/fonts/Pokemon\ Solid.ttf);
 }
+.error{
+    font-family: pokemons;
+    letter-spacing: 20px;
+    color:rgb(0, 0, 0);
+
+}
 .logo {
     font-family: pokemons;
     color:rgb(210, 0, 26);
