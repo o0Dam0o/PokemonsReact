@@ -7,12 +7,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: "AIzaSyAIp0nMtCYr_2war6bvMPaPo21-C8jrFco",
-	authDomain: "pokestore-cc661.firebaseapp.com",
-	projectId: "pokestore-cc661",
-	storageBucket: "pokestore-cc661.appspot.com",
-	messagingSenderId: "579770460189",
-	appId: "1:579770460189:web:15ec636007010df38f7ef4",
+	apiKey: process.env.REACT_APP_apiKey,
+	authDomain: process.env.REACT_APP_authDomain,
+	projectId: process.env.REACT_APP_projectId,
+	storageBucket: process.env.REACT_APP_storageBucket,
+	messagingSenderId: process.env.REACT_APP_messagingSenderId,
+	appId: process.env.REACT_APP_appId,
 };
 
 // Initialize Firebase

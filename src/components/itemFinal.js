@@ -10,6 +10,7 @@ const ItemFinal = ({ pokemons }) => {
 	const { setNotificaion } = useContext(NotifiacionContex);
 	const [loading, setLoading] = useState(false);
 	let precio = 0;
+	console.log(pokemons.idFirebase);
 	try {
 		precio = Legendarios.includes(pokemons.name)
 			? 999999

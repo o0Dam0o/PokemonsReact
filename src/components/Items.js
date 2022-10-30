@@ -77,7 +77,7 @@ const Items = ({ pokemons }) => {
 				>
 					<Link
 						className="text-dark"
-						to={`/pokemon/${pokemons.name}`}
+						to={`/pokemon/${pokemons.idFirebase}`}
 						style={{ textDecoration: "none" }}
 					>
 						Mas Informacion

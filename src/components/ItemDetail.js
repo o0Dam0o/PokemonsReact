@@ -3,14 +3,36 @@ import { getType, getPokemons, getSearch } from "../asyncMock";
 import { useParams } from "react-router-dom";
 import PokemonNot from "../components/Navbar/assets/pokemon-desconocido.png";
 import Items from "./Items";
+import { db } from "../services/firebase";
+import {
+	getDocs,
+	collection,
+	query,
+	where,
+	getCountFromServer,
+} from "firebase/firestore";
 const ItemDetail = ({ legends }) => {
 	const { typeId } = useParams();
 	const [type, setType] = useState({});
 	const [loading, setLoading] = useState(false);
+	const collectionRef = collection(db, "pokemon");
+
 	const getFetch = async () => {
 		try {
 			setLoading(false);
-			if (Array.isArray(legends)) {
+			const typesRef = query(
+				collectionRef,
+				where("tipos", "array-contains", typeId)
+			);
+			const res = await getDocs(typesRef);
+			const data = res.docs.map((doc) => {
+				const docData = doc.data();
+
+				return { idFirebase: doc.id, ...docData };
+			});
+			setType(data);
+
+			/* if (Array.isArray(legends)) {
 				const data = await Promise.all(
 					legends.map((t) => {
 						return getSearch(t);
@@ -25,7 +47,7 @@ const ItemDetail = ({ legends }) => {
 					})
 				);
 				setType(data);
-			}
+			} */
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -60,11 +82,16 @@ const ItemDetail = ({ legends }) => {
 		);
 	}
 	return (
-		<div className="d-flex flex-wrap justify-content-center mx-5 alingn-items-center">
-			{type.map((pokemons, i) => (
-				<Items key={i} pokemons={pokemons} />
-			))}
-		</div>
+		<>
+			<h2 className="d-flex justify-content-center my-2">
+				{typeId.toUpperCase()}
+			</h2>
+			<div className="d-flex flex-wrap justify-content-center mx-5 alingn-items-center">
+				{type.map((pokemons, i) => (
+					<Items key={i} pokemons={pokemons} />
+				))}
+			</div>
+		</>
 	);
 };
 export default ItemDetail;

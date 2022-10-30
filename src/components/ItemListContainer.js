@@ -5,16 +5,53 @@ import { useParams } from "react-router-dom";
 import PokemonNot from "./Navbar/assets/pokemon-desconocido.png";
 import Pagination from "./Pagination";
 import ItemList from "./ItemList";
-
+import { db } from "../services/firebase";
+import {
+	getDocs,
+	collection,
+	query,
+	where,
+	getCountFromServer,
+} from "firebase/firestore";
 const ItemListContainer = () => {
-	const { pokedexId } = useParams();
+	const { pokedexId } = useParams(1);
 	const { getEncontrado } = useContext(SearchContex);
 	const [loading, setLoading] = useState(false);
 	const [not, setNot] = useState(false);
 	const [pokemons, setPokemons] = useState([]);
 	const [paginaTotal, setPaginaTotal] = useState(0);
-	const [pagina, setPagina] = useState(0);
-	const getFetch = async () => {
+	const paginas = 25 * (!pokedexId ? 1 : pokedexId);
+	const getFirebase = async () => {
+		const collectionRef = collection(db, "pokemon");
+		setNot(false);
+		setLoading(true);
+		try {
+			const res = await getDocs(collectionRef);
+			/* const a = query(collectionRef, where("tipos", "array-contains", "fairy"));
+			const snapshot = await getCountFromServer(a);
+			console.log("count: ", snapshot.data().count);
+			const b = await getDocs(a);
+			console.log(
+				b.docs.map((a) => {
+					const e = a.data();
+					return { ...e };
+				})
+			); */
+			const data = res.docs.map((doc) => {
+				const docData = doc.data();
+
+				return { idFirebase: doc.id, ...docData };
+			});
+			const order = data.sort((a, b) => a.id - b.id);
+			setPaginaTotal(Math.ceil(order.length / 25));
+			setPokemons(order.slice(!pokedexId ? 0 : paginas - 25, paginas));
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+	/* 	const getFetch = async () => {
 		setLoading(true);
 		setNot(false);
 		try {
@@ -39,10 +76,9 @@ const ItemListContainer = () => {
 				setLoading(false);
 			}, 400);
 		}
-	};
-
+	}; */
 	useEffect(() => {
-		getFetch();
+		getFirebase();
 	}, [pokedexId, getEncontrado]);
 
 	if (loading) {
@@ -69,12 +105,7 @@ const ItemListContainer = () => {
 	}
 	return (
 		<>
-			<Pagination
-				pagina={pagina}
-				paginaTotal={paginaTotal}
-				setPagina={setPagina}
-				pokedexId={pokedexId}
-			/>
+			<Pagination paginaTotal={paginaTotal} pokedexId={pokedexId} />
 
 			<div className="d-flex flex-column align-items-center ">
 				<div className="d-flex flex-wrap justify-content-center mx-5 alingn-items-center">

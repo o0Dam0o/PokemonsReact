@@ -1,12 +1,17 @@
-import { async } from "@firebase/util";
-import { collection, addDoc } from "firebase/firestore";
+import {
+	collection,
+	addDoc,
+	doc,
+	deleteDoc,
+	getDocs,
+} from "firebase/firestore";
 import { db } from "./services/firebase";
 export const getSearch = async (pokemon) => {
 	const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 	const data = await resp.json();
 	return data;
 };
-export const getType = async (type) => {
+export const getType = async (type = "type") => {
 	const resp = await fetch(`https://pokeapi.co/api/v2/${type}`);
 	const data = await resp.json();
 	return data;
@@ -162,11 +167,38 @@ const guardar = async () => {
 			: PreciosTipos[p.types[0].type.name] +
 			  (p.types[1] ? PreciosTipos[p.types[1].type.name] : 0);
 		const docRef = await addDoc(collection(db, "pokemon"), {
-			...p,
+			tipos: [p.types[0].type.name, p.types[1] ? p.types[1].type.name : ""],
+			weight: p.weight,
+			types: p.types,
+			stats: p.stats,
+			sprites: p.sprites,
+			name: p.name,
+			id: p.id,
+			height: p.height,
+			base_experience: p.base_experience,
+			abilities: p.abilities,
 			price: precio,
 			stock: 15,
 		});
 		console.log("Document written with ID: ", docRef.id);
 	});
 };
-guardar();
+const guardarType = async () => {
+	const res = await getType("type");
+	const data = res.results.map((a) => {
+		return { label: a.name.toUpperCase(), slug: a.name };
+	});
+	data.forEach(async (p, i) => {
+		const docRef = await addDoc(collection(db, "types"), { ...p });
+		console.log("Document written with ID: ", docRef.id);
+	});
+};
+const eliminar = async () => {
+	const docData = collection(db, "pokemons");
+	const res = await getDocs(docData);
+	const data = res.docs.map((a) => {
+		return a.id;
+	});
+	await deleteDoc(doc(db, "cities", data[0]));
+	console.log(data[0]);
+};
