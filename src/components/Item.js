@@ -14,11 +14,9 @@ const Item = () => {
 		setLoading(true);
 		try {
 			const docRef = doc(db, "pokemon", pokemonId);
-			console.log(docRef);
 			const res = await getDoc(docRef);
 			const data = res.data();
 			const docData = { idFirebase: doc.id, ...data };
-			console.log(docData);
 			setPokemons(docData);
 		} catch (error) {
 		} finally {

@@ -5,12 +5,11 @@ import { CartContext } from "../context/CartContext";
 import { NotifiacionContex } from "../context/NotificacionContext";
 
 const ItemFinal = ({ pokemons }) => {
-	const { id, name, types, sprites } = pokemons;
+	const { id, name, types, sprites, price, stock } = pokemons;
 	const { addCart, initial } = useContext(CartContext);
-	const { setNotificaion } = useContext(NotifiacionContex);
+	const { setNotification } = useContext(NotifiacionContex);
 	const [loading, setLoading] = useState(false);
 	let precio = 0;
-	console.log(pokemons.idFirebase);
 	try {
 		precio = Legendarios.includes(pokemons.name)
 			? 999999
@@ -23,23 +22,30 @@ const ItemFinal = ({ pokemons }) => {
 		}, 800);
 	}
 	const handleOnAdd = (count) => {
-		const pokemon = { id, name, types, sprites, precio, count };
+		const pokemon = {
+			id,
+			name,
+			types,
+			sprites,
+			price,
+			count,
+		};
 
 		addCart(pokemon);
 		if (!initial(pokemon)) {
 			if (count === 0) {
-				setNotificaion(
+				setNotification(
 					"error",
 					`Se elimino ${name.toUpperCase()} del carrito `
 				);
 			}
 			if (count > 0)
-				setNotificaion(
+				setNotification(
 					"success",
 					`Se agrego correctamente ${count} Pokemons de ${name.toUpperCase()} `
 				);
 		} else {
-			setNotificaion(
+			setNotification(
 				"update",
 				`Se Actualizo correctamente ${count} Pokemons de ${name.toUpperCase()} `
 			);
@@ -143,10 +149,8 @@ const ItemFinal = ({ pokemons }) => {
 						</div>
 						<ItemCount
 							pokemon={pokemons}
-							stock={Legendarios.includes(pokemons.name) ? 0 : 10}
-							initial={
-								Legendarios.includes(pokemons.name) ? 0 : initial(pokemons) ?? 1
-							}
+							stock={stock}
+							initial={initial(pokemons) ?? 1}
 							handleOnAdd={handleOnAdd}
 						/>
 					</div>

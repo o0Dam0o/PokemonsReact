@@ -1,36 +1,31 @@
 import { useState, useEffect } from "react";
 import { getType, getPokemons, getSearch } from "../asyncMock";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import PokemonNot from "../components/Navbar/assets/pokemon-desconocido.png";
 import Items from "./Items";
 import { db } from "../services/firebase";
-import {
-	getDocs,
-	collection,
-	query,
-	where,
-	getCountFromServer,
-} from "firebase/firestore";
-const ItemDetail = ({ legends }) => {
+import { getDocs, collection, query, where } from "firebase/firestore";
+const ItemDetail = () => {
 	const { typeId } = useParams();
+	const location = useLocation();
 	const [type, setType] = useState({});
 	const [loading, setLoading] = useState(false);
 	const collectionRef = collection(db, "pokemon");
-
 	const getFetch = async () => {
 		try {
 			setLoading(false);
-			const typesRef = query(
-				collectionRef,
-				where("tipos", "array-contains", typeId)
-			);
+			const typesRef =
+				location.pathname !== "/legendarios"
+					? query(collectionRef, where("tipos", "array-contains", typeId))
+					: query(collectionRef, where("legend", "==", true));
 			const res = await getDocs(typesRef);
 			const data = res.docs.map((doc) => {
 				const docData = doc.data();
 
 				return { idFirebase: doc.id, ...docData };
 			});
-			setType(data);
+			const order = data.sort((a, b) => a.id - b.id);
+			setType(order);
 
 			/* if (Array.isArray(legends)) {
 				const data = await Promise.all(
@@ -84,7 +79,7 @@ const ItemDetail = ({ legends }) => {
 	return (
 		<>
 			<h2 className="d-flex justify-content-center my-2">
-				{typeId.toUpperCase()}
+				{!typeId ? "LEGENDARIOS" : typeId.toUpperCase()}
 			</h2>
 			<div className="d-flex flex-wrap justify-content-center mx-5 alingn-items-center">
 				{type.map((pokemons, i) => (

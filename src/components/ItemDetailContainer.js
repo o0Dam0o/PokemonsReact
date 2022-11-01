@@ -37,7 +37,6 @@ const ItemDetailContainer = ({ type }) => {
 			}, 500);
 		}
 	};
-	console.log(types);
 	useEffect(() => {
 		getFetch();
 	}, []);
@@ -72,11 +71,6 @@ const ItemDetailContainer = ({ type }) => {
 							<Link to={t.slug} style={{ textDecoration: "none" }}>
 								<div className="card-body d-flex flex-column align-items-center">
 									<h2 className="card-title text-light">{t.label}</h2>
-									<p className="card-text ">
-										<small className="text-muted border bg-light rounded-start">
-											Pokemons: {"t.count"}
-										</small>
-									</p>
 								</div>
 							</Link>
 						</div>

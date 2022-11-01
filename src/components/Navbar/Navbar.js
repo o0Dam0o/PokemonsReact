@@ -63,7 +63,9 @@ const Navbar = ({ OnSearch }) => {
 							Legendarios
 						</NavLink>
 					</li>
-					<CartWidget />
+					<NavLink to="/cart" style={{ textDecoration: "none" }}>
+						<CartWidget />
+					</NavLink>
 				</ul>
 				<SearchBar OnSearch={OnSearch} />
 			</div>

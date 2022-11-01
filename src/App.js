@@ -5,10 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Item from "./components/Item";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import ItemDetail from "./components/ItemDetail";
-import { Legendarios } from "./asyncMock";
 import CartContextProvider from "./context/CartContext";
 import NotifiacionContexProvider from "./context/NotificacionContext";
 import SearchContexProvider from "./context/SearchContex";
+import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 
 function App() {
 	return (
@@ -29,11 +30,9 @@ function App() {
 								path="/type/:typeId"
 								element={<ItemDetail type={false} />}
 							/>
-							<Route
-								path="/legendarios"
-								element={<ItemDetail legends={Legendarios} />}
-							/>
-							<Route path="/" />
+							<Route path="/legendarios" element={<ItemDetail />} />
+							<Route path="/cart" element={<Cart />} />
+							<Route path="/checkout" element={<Checkout />} />
 							<Route
 								path="*"
 								element={

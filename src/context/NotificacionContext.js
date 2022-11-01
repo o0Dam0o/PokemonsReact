@@ -45,16 +45,16 @@ const Notifiacion = ({ msg, setMsg, type }) => {
 const NotifiacionContexProvider = ({ children }) => {
 	const [msg, setMsg] = useState("");
 	const [type, setType] = useState("");
-	const setNotificaion = (t, m) => {
+	const setNotification = (t, m) => {
 		setMsg(m);
 		setType(t);
 		setTimeout(() => {
 			setType("");
 			setMsg("");
-		}, 5000);
+		}, 1000);
 	};
 	return (
-		<NotifiacionContex.Provider value={{ setNotificaion }}>
+		<NotifiacionContex.Provider value={{ setNotification }}>
 			<Notifiacion msg={msg} setMsg={setMsg} type={type} setType={setType} />
 			{children}
 		</NotifiacionContex.Provider>

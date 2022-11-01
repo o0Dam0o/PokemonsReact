@@ -6,13 +6,7 @@ import PokemonNot from "./Navbar/assets/pokemon-desconocido.png";
 import Pagination from "./Pagination";
 import ItemList from "./ItemList";
 import { db } from "../services/firebase";
-import {
-	getDocs,
-	collection,
-	query,
-	where,
-	getCountFromServer,
-} from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 const ItemListContainer = () => {
 	const { pokedexId } = useParams(1);
 	const { getEncontrado } = useContext(SearchContex);
@@ -39,7 +33,6 @@ const ItemListContainer = () => {
 			); */
 			const data = res.docs.map((doc) => {
 				const docData = doc.data();
-
 				return { idFirebase: doc.id, ...docData };
 			});
 			const order = data.sort((a, b) => a.id - b.id);
