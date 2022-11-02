@@ -2,84 +2,79 @@ import { useState } from "react";
 
 const Checkout = () => {
 	const [order, setOrder] = useState({});
-	const onClick = (event) => {
+	const getForm = (event) => {
 		event.preventDefault();
-		console.log(order);
+		const name = event.target.nombre.value;
+		const celular = event.target.celular.value;
+		const email = event.target.email.value;
+		const direccion = event.target.direccion.value;
+		const localidad = event.target.localidad.value;
+		const provincia = event.target.provincia.value;
+		const cp = event.target.cp.value;
+		setOrder({
+			name: name,
+			celular: celular,
+			email: email,
+			direccion: direccion,
+			localidad: localidad,
+			provincia: provincia,
+			cp: cp,
+		});
 	};
 	console.log(order);
-
 	return (
 		<div className="container d-flex flex-column align-items-center">
 			<p className="h3 my-xxl-5">Checkout</p>
-			<form className="row g-3 border p-3">
+			<form className="row g-3 border p-3" onSubmit={getForm}>
 				<div className="col-md-6">
-					<label for="Firstname" className="form-label">
-						Nombre Completo
-					</label>
+					<label className="form-label">Nombre Completo</label>
 					<input
 						type="text"
 						class="form-control"
 						aria-label="Nombre"
-						nombre={(e) => {
-							const a = e.target.value;
-							setOrder(a);
-						}}
+						name="nombre"
 					/>
 				</div>
 				<div className="col-md-6">
-					<label for="inputPassword4" className="form-label">
-						Numero Celular
-					</label>
+					<label className="form-label">Numero Celular</label>
 					<input
 						type="number"
 						className="form-control"
 						id="inputNumero"
-						Numero={(e) => e.target.value}
+						name="celular"
 					/>
 				</div>
 				<div className="col-12">
-					<label for="inputEmail4" class="form-label">
-						Email
-					</label>
+					<label class="form-label">Email</label>
 					<input
 						type="email"
 						class="form-control"
 						id="inputEmail"
-						Email={(e) => e.target.value}
+						name="email"
 					/>
 				</div>
 				<div className="col-12">
-					<label for="inputAddress2" className="form-label">
-						Direccion
-					</label>
+					<label className="form-label">Direccion</label>
 					<input
 						type="text"
 						className="form-control"
 						id="inputDireccion"
 						placeholder="Departameto, calle,numero etc"
-						Direccion={(e) => e.target.value}
+						name="direccion"
 					/>
 				</div>
 				<div className="col-md-6">
-					<label for="inputCity" className="form-label">
-						Localidad
-					</label>
+					<label className="form-label">Localidad</label>
 					<input
 						type="text"
 						className="form-control"
 						id="inputLocalidad"
-						Localidad={(e) => e.target.value}
+						name="localidad"
 					/>
 				</div>
 				<div className="col-md-4">
-					<label for="inputState" className="form-label">
-						Provincia
-					</label>
-					<select
-						id="inputState"
-						className="form-select"
-						Provincia={(e) => e.target.value}
-					>
+					<label className="form-label">Provincia</label>
+					<select id="inputState" className="form-select" name="provincia">
 						<option selected>Buenos Aires</option>
 						<option>Cordoba</option>
 						<option>Santa Fe</option>
@@ -87,10 +82,8 @@ const Checkout = () => {
 					</select>
 				</div>
 				<div className="col-md-2">
-					<label for="inputZip" className="form-label">
-						Codigo Postal
-					</label>
-					<input type="text" className="form-control" id="inputZip" />
+					<label className="form-label">Codigo Postal</label>
+					<input type="text" className="form-control" id="inputZip" name="cp" />
 				</div>
 				<div className="col-12">
 					<div className="form-check">
@@ -99,16 +92,13 @@ const Checkout = () => {
 							type="checkbox"
 							id="gridCheck"
 						/>
-						<label className="form-check-label" for="gridCheck">
-							Recordar
-						</label>
+						<label className="form-check-label">Recordar</label>
 					</div>
 				</div>
 				<div className=" d-flex col-12 justify-content-center">
 					<button
-						type="buton"
+						type="submit"
 						className="btn btn-danger justify-content-center"
-						onClick={onClick}
 					>
 						Finalizar Compra
 					</button>
