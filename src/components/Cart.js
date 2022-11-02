@@ -49,7 +49,7 @@ const Cart = () => {
 				<button
 					type="button"
 					className="btn btn-outline-danger"
-					onClick={() => getDeleteAll()}
+					onClick={() => getDeleteAll(true)}
 				>
 					Eliminar Todo
 				</button>

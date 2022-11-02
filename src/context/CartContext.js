@@ -40,8 +40,10 @@ const CartContextProvider = ({ children }) => {
 		cart.splice(index, 1);
 		setCart([...cart]);
 	};
-	const getDeleteAll = () => {
-		setNotification("error", `Se Eliminaron todos los Productos`);
+	const getDeleteAll = (e) => {
+		if (e) {
+			setNotification("error", `Se Eliminaron todos los Productos`);
+		}
 		setCart([]);
 	};
 	const getTotalFinal = () => {
