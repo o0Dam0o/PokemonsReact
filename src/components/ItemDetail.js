@@ -1,60 +1,28 @@
 import { useState, useEffect } from "react";
-import { getType, getPokemons, getSearch } from "../asyncMock";
 import { useParams, useLocation } from "react-router-dom";
 import PokemonNot from "../components/Navbar/assets/pokemon-desconocido.png";
 import Items from "./Items";
-import { db } from "../services/firebase";
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getProducts } from "../services/firestore";
 const ItemDetail = () => {
 	const { typeId } = useParams();
 	const location = useLocation();
 	const [type, setType] = useState({});
-	const [loading, setLoading] = useState(false);
-	const collectionRef = collection(db, "pokemon");
-	const getFetch = async () => {
-		try {
-			setLoading(false);
-			const typesRef =
-				location.pathname !== "/legendarios"
-					? query(collectionRef, where("tipos", "array-contains", typeId))
-					: query(collectionRef, where("legend", "==", true));
-			const res = await getDocs(typesRef);
-			const data = res.docs.map((doc) => {
-				const docData = doc.data();
-
-				return { idFirebase: doc.id, ...docData };
-			});
-			const order = data.sort((a, b) => a.id - b.id);
-			setType(order);
-
-			/* if (Array.isArray(legends)) {
-				const data = await Promise.all(
-					legends.map((t) => {
-						return getSearch(t);
-					})
-				);
-				setType(data);
-			} else {
-				const res = await getType(`type/${typeId}`);
-				const data = await Promise.all(
-					res.pokemon.map((t) => {
-						return getPokemons(t.pokemon.url);
-					})
-				);
-				setType(data);
-			} */
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setTimeout(() => {
-				setLoading(true);
-			}, 800);
-		}
-	};
+	const [loading, setLoading] = useState(true);
+	const search = location.pathname === "/legendarios" ? "legend" : typeId;
 	useEffect(() => {
-		getFetch();
+		setLoading(true);
+		getProducts("pokemon", search)
+			.then((res) => {
+				setType(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	}, [typeId]);
-	if (!loading) {
+	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">
 				<div className="spinner-border text-danger " role="status">

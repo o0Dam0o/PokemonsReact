@@ -1,4 +1,4 @@
-import { colorTipos, Legendarios, PreciosTipos } from "../asyncMock";
+import { colorTipos } from "../asyncMock";
 import ItemCount from "../components/ItemCount/ItemCount";
 import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
@@ -8,19 +8,8 @@ const ItemFinal = ({ pokemons }) => {
 	const { id, name, types, sprites, price, stock } = pokemons;
 	const { addCart, initial } = useContext(CartContext);
 	const { setNotification } = useContext(NotifiacionContex);
-	const [loading, setLoading] = useState(false);
-	let precio = 0;
-	try {
-		precio = Legendarios.includes(pokemons.name)
-			? 999999
-			: PreciosTipos[pokemons.types[0].type.name] +
-			  (pokemons.types[1] ? PreciosTipos[pokemons.types[1].type.name] : 0);
-	} catch (error) {
-	} finally {
-		setTimeout(() => {
-			setLoading(true);
-		}, 800);
-	}
+	const [loading, setLoading] = useState(true);
+
 	const handleOnAdd = (count) => {
 		const pokemon = {
 			id,
@@ -51,7 +40,10 @@ const ItemFinal = ({ pokemons }) => {
 			);
 		}
 	};
-	if (!loading) {
+	setTimeout(() => {
+		setLoading(false);
+	}, 800);
+	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">
 				<div className="spinner-border text-danger " role="status">
@@ -145,7 +137,7 @@ const ItemFinal = ({ pokemons }) => {
 					</div>
 					<div className="bg-light w-25 d-flex flex-column align-items-center justify-content-around ">
 						<div>
-							<h3>Precio ${precio}</h3>
+							<h3>Precio ${price}</h3>
 						</div>
 						<ItemCount
 							pokemon={pokemons}

@@ -1,32 +1,25 @@
 /* eslint-disable no-undef */
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getSearch } from "../asyncMock";
-import { db } from "../services/firebase";
-import { collection, doc, getDoc, query, where } from "firebase/firestore";
+import { getProduct } from "../services/firestore";
 import ItemFinal from "./itemFinal";
 
 const Item = () => {
 	const [loading, setLoading] = useState(false);
 	const [pokemons, setPokemons] = useState({});
 	const { pokemonId } = useParams();
-	const getFetch = async () => {
-		setLoading(true);
-		try {
-			const docRef = doc(db, "pokemon", pokemonId);
-			const res = await getDoc(docRef);
-			const data = res.data();
-			const docData = { idFirebase: doc.id, ...data };
-			setPokemons(docData);
-		} catch (error) {
-		} finally {
-			setTimeout(() => {
-				setLoading(false);
-			}, 800);
-		}
-	};
 	useEffect(() => {
-		getFetch();
+		setLoading(true);
+		getProduct(pokemonId)
+			.then((res) => {
+				setPokemons(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	}, [pokemonId]);
 	if (loading) {
 		return (
