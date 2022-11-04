@@ -7,11 +7,9 @@ import { useAsync } from "../hooks/useAsync";
 const ItemListContainer = () => {
 	const { pokedexId } = useParams(1);
 	const paginas = 25 * (!pokedexId ? 1 : pokedexId);
-	const { data: pokemons, loading } = useAsync(
-		() => getProducts(),
-		[pokedexId, paginas]
-	);
-	const paginaTotal = Math.ceil(pokemons?.length / 25);
+	const { data, loading } = useAsync(() => getProducts(), [pokedexId, paginas]);
+	const paginaTotal = Math.ceil(data?.length / 25);
+	const pokemons = data?.slice(!pokedexId ? 0 : paginas - 25, paginas);
 	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">
