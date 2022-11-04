@@ -23,7 +23,7 @@ const ItemListContainer = () => {
 			.finally(() => {
 				setLoading(false);
 			});
-	}, [pokedexId]);
+	}, [pokedexId, paginas]);
 
 	if (loading) {
 		return (
