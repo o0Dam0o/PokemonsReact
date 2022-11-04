@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
-import { NotifiacionContex } from "../context/NotificacionContext";
-import { CartContext } from "../context/CartContext";
+import { useState } from "react";
+import { useNotificacion } from "../context/NotificacionContext";
+import { useCart } from "../context/CartContext";
 import {
 	getDocs,
 	addDoc,
@@ -14,8 +14,8 @@ import { Navigate } from "react-router-dom";
 
 const Checkout = () => {
 	const [loading, setLoading] = useState(false);
-	const { cart, getTotalFinal, getDeleteAll } = useContext(CartContext);
-	const { setNotification } = useContext(NotifiacionContex);
+	const { cart, getTotalFinal, getDeleteAll } = useCart();
+	const { setNotification } = useNotificacion();
 	const total = getTotalFinal();
 	const getForm = async (event) => {
 		event.preventDefault();
@@ -65,11 +65,12 @@ const Checkout = () => {
 
 				setNotification(
 					"success",
-					`El Numero de su orden es: ${orderAdded.id}`
+					`El Numero de su orden es: ${orderAdded.id}`,
+					8000
 				);
 				getDeleteAll();
 			} else {
-				setNotification("error", "Hay productos fuera de stock");
+				setNotification("error", "Hay productos fuera de stock", 2000);
 			}
 		} catch (error) {
 			console.log(error);

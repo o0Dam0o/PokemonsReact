@@ -1,6 +1,5 @@
-import { colorTipos } from "../asyncMock";
+import { colorTipos, Legendarios } from "../asyncMock";
 import { Link } from "react-router-dom";
-import { Legendarios } from "../asyncMock";
 const Items = ({ pokemons }) => {
 	return (
 		<div

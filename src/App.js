@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Item from "./components/Item";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import ItemDetail from "./components/ItemDetail";
-import CartContextProvider from "./context/CartContext";
-import NotifiacionContexProvider from "./context/NotificacionContext";
+import { CartContextProvider } from "./context/CartContext";
+import { NotifiacionContexProvider } from "./context/NotificacionContext";
 import SearchContexProvider from "./context/SearchContex";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
@@ -25,10 +25,7 @@ function App() {
 								element={<ItemListContainer />}
 							/>
 							<Route path="/pokemon/:pokemonId" element={<Item />} />
-							<Route
-								path="/type"
-								element={<ItemDetailContainer type={"type"} />}
-							/>
+							<Route path="/type" element={<ItemDetailContainer />} />
 							<Route path="/type/:typeId" element={<ItemDetail />} />
 							<Route path="/legendarios" element={<ItemDetail />} />
 							<Route path="/cart" element={<Cart />} />

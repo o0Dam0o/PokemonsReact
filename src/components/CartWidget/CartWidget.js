@@ -1,8 +1,7 @@
 import cart from "./assets/poke-cart.svg";
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 const CartWidget = () => {
-	const { getToltalProductos } = useContext(CartContext);
+	const { getToltalProductos } = useCart();
 	const total = getToltalProductos();
 	return (
 		<div

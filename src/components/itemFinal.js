@@ -1,13 +1,13 @@
 import { colorTipos } from "../asyncMock";
 import ItemCount from "../components/ItemCount/ItemCount";
-import { useState, useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { NotifiacionContex } from "../context/NotificacionContext";
+import { useState } from "react";
+import { useCart } from "../context/CartContext";
+import { useNotificacion } from "../context/NotificacionContext";
 
 const ItemFinal = ({ pokemons }) => {
 	const { id, name, types, sprites, price, stock } = pokemons;
-	const { addCart, initial } = useContext(CartContext);
-	const { setNotification } = useContext(NotifiacionContex);
+	const { addCart, initial } = useCart();
+	const { setNotification } = useNotificacion();
 	const [loading, setLoading] = useState(true);
 
 	const handleOnAdd = (count) => {

@@ -1,9 +1,12 @@
 import { createContext, useContext, useState } from "react";
-import { NotifiacionContex } from "./NotificacionContext";
-export const CartContext = createContext();
+import { useNotificacion } from "./NotificacionContext";
+const CartContext = createContext();
 
-const CartContextProvider = ({ children }) => {
-	const { setNotification } = useContext(NotifiacionContex);
+export const useCart = () => {
+	return useContext(CartContext);
+};
+export const CartContextProvider = ({ children }) => {
+	const { setNotification } = useNotificacion();
 	const [cart, setCart] = useState([]);
 	const addCart = (pokemon) => {
 		if (!InCart(pokemon)) {
@@ -69,4 +72,3 @@ const CartContextProvider = ({ children }) => {
 		</CartContext.Provider>
 	);
 };
-export default CartContextProvider;

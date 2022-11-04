@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useCart } from "../context/CartContext";
 import PokemonNot from "./Navbar/assets/pokemon-desconocido.png";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem";
 const Cart = () => {
-	const { cart, getDelete, getDeleteAll, getTotalFinal } =
-		useContext(CartContext);
+	const { cart, getDelete, getDeleteAll, getTotalFinal } = useCart();
 	const total = getTotalFinal();
 	if (cart.length === 0) {
 		return (

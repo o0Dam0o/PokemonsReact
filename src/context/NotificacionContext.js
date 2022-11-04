@@ -1,5 +1,8 @@
-import { useState, createContext } from "react";
-export const NotifiacionContex = createContext();
+import { useState, createContext, useContext } from "react";
+const NotifiacionContex = createContext();
+export const useNotificacion = () => {
+	return useContext(NotifiacionContex);
+};
 const Notifiacion = ({ msg, setMsg, type }) => {
 	if (msg === "") return;
 	const bg =
@@ -42,16 +45,16 @@ const Notifiacion = ({ msg, setMsg, type }) => {
 	);
 };
 
-const NotifiacionContexProvider = ({ children }) => {
+export const NotifiacionContexProvider = ({ children }) => {
 	const [msg, setMsg] = useState("");
 	const [type, setType] = useState("");
-	const setNotification = (t, m) => {
-		setMsg(m);
-		setType(t);
+	const setNotification = (tipo, msg, time = 1300) => {
+		setMsg(msg);
+		setType(tipo);
 		setTimeout(() => {
 			setType("");
 			setMsg("");
-		}, 1000);
+		}, time);
 	};
 	return (
 		<NotifiacionContex.Provider value={{ setNotification }}>
@@ -60,4 +63,3 @@ const NotifiacionContexProvider = ({ children }) => {
 		</NotifiacionContex.Provider>
 	);
 };
-export default NotifiacionContexProvider;

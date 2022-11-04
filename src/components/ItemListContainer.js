@@ -1,30 +1,17 @@
 import { getProducts } from "../services/firestore";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "./Pagination";
 import ItemList from "./ItemList";
+import { useAsync } from "../hooks/useAsync";
 
 const ItemListContainer = () => {
 	const { pokedexId } = useParams(1);
-	const [loading, setLoading] = useState(false);
-	const [pokemons, setPokemons] = useState([]);
-	const [paginaTotal, setPaginaTotal] = useState(0);
 	const paginas = 25 * (!pokedexId ? 1 : pokedexId);
-	useEffect(() => {
-		setLoading(true);
-		getProducts()
-			.then((res) => {
-				setPaginaTotal(Math.ceil(res.length / 25));
-				setPokemons(res.slice(!pokedexId ? 0 : paginas - 25, paginas));
-			})
-			.catch((error) => {
-				console.log(error);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [pokedexId, paginas]);
-
+	const { data: pokemons, loading } = useAsync(
+		() => getProducts(),
+		[pokedexId, paginas]
+	);
+	const paginaTotal = Math.ceil(pokemons?.length / 25);
 	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">

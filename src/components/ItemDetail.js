@@ -1,27 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PokemonNot from "../components/Navbar/assets/pokemon-desconocido.png";
 import Items from "./Items";
 import { getProducts } from "../services/firestore";
+import { useAsync } from "../hooks/useAsync";
 const ItemDetail = () => {
 	const { typeId } = useParams();
-	const location = useLocation();
-	const [type, setType] = useState({});
-	const [loading, setLoading] = useState(true);
-	const search = location.pathname === "/legendarios" ? "legend" : typeId;
-	useEffect(() => {
-		setLoading(true);
-		getProducts("pokemon", search)
-			.then((res) => {
-				setType(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, [typeId, search]);
+	const search = typeId === undefined ? "legend" : typeId;
+	const { data: type, loading } = useAsync(
+		() => getProducts(search),
+		[typeId, search]
+	);
 	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">

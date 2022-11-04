@@ -1,24 +1,11 @@
 import { colorTipos } from "../asyncMock";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../services/firestore";
-
+import { useAsync } from "../hooks/useAsync";
 const ItemDetailContainer = () => {
-	const [types, setTypes] = useState({});
-	const [loading, setLoading] = useState(true);
-	useEffect(() => {
-		setLoading(true);
-		getProducts("types")
-			.then((res) => {
-				setTypes(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
-	}, []);
+	const { data: types, loading } = useAsync(() =>
+		getProducts(undefined, "types")
+	);
 	if (loading) {
 		return (
 			<div className="position-absolute top-50 start-50 translate-middle">

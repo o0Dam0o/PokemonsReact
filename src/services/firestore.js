@@ -7,7 +7,7 @@ import {
 	where,
 } from "firebase/firestore";
 import { db } from "./firebase";
-export const getProducts = (product = "pokemon", search = undefined) => {
+export const getProducts = (search = undefined, product = "pokemon") => {
 	return new Promise((resolve, reject) => {
 		const collectionRef = !search
 			? collection(db, product)
@@ -48,3 +48,4 @@ export const getProduct = (pokemonId) => {
 export const getTypes = () => {
 	return new Promise((resolve, reject) => {});
 };
+export const getCheckout = () => {};
