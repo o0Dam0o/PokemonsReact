@@ -20,20 +20,21 @@ function App() {
 						<Navbar />
 						<Routes>
 							<Route exact path="/" element={<ItemListContainer />} />
-							<Route path="/:pokedexId" element={<ItemListContainer />} />
+							<Route
+								path="/pokedex/:pokedexId"
+								element={<ItemListContainer />}
+							/>
 							<Route path="/pokemon/:pokemonId" element={<Item />} />
 							<Route
 								path="/type"
 								element={<ItemDetailContainer type={"type"} />}
 							/>
-							<Route
-								path="/type/:typeId"
-								element={<ItemDetail type={false} />}
-							/>
+							<Route path="/type/:typeId" element={<ItemDetail />} />
 							<Route path="/legendarios" element={<ItemDetail />} />
 							<Route path="/cart" element={<Cart />} />
 							<Route path="/checkout" element={<Checkout />} />
 							<Route
+								exact
 								path="*"
 								element={
 									<div

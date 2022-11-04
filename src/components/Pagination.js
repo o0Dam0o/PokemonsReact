@@ -5,11 +5,11 @@ const Pagination = ({ paginaTotal, pokedexId }) => {
 			<h2>Pokedex</h2>
 			<div className="d-flex align-items-center">
 				<Link
-					to={`/${
+					to={`/pokedex/${
 						!pokedexId
 							? "/"
 							: parseInt(pokedexId) === 1
-							? "/"
+							? "1"
 							: parseInt(pokedexId) - 1
 					}`}
 					className="btn btn-danger"
@@ -20,7 +20,7 @@ const Pagination = ({ paginaTotal, pokedexId }) => {
 					{!pokedexId ? 1 : pokedexId} de {paginaTotal}
 				</div>
 				<Link
-					to={`/${
+					to={`/pokedex/${
 						!pokedexId
 							? 2
 							: parseInt(pokedexId) === paginaTotal
