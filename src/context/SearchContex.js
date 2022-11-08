@@ -4,13 +4,14 @@ export const SearchContex = createContext();
 const SearchContexProvider = ({ children }) => {
 	const [searchs, setSearchs] = useState("");
 	const getSearch = (pokemon) => {
-		setSearchs(pokemon.toLowerCase());
+		setSearchs(pokemon?.toLowerCase());
 	};
 	const getEncontrado = () => {
 		return searchs;
 	};
+	console.log(searchs);
 	return (
-		<SearchContex.Provider value={{ getSearch, getEncontrado }}>
+		<SearchContex.Provider value={{ getSearch, getEncontrado, searchs }}>
 			{children}
 		</SearchContex.Provider>
 	);
