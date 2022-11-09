@@ -7,7 +7,7 @@ import ItemDetailContainer from "./components/ItemDetailContainer";
 import ItemDetail from "./components/ItemDetail";
 import { CartContextProvider } from "./context/CartContext";
 import { NotifiacionContexProvider } from "./context/NotificacionContext";
-import SearchContexProvider from "./context/SearchContex";
+import { SearchContexProvider } from "./context/SearchContex";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 

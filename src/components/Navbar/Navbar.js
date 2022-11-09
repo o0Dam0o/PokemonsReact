@@ -3,7 +3,6 @@ import CartWidget from "../CartWidget/CartWidget";
 import "./Navbar.css";
 import SearchBar from "../SearchBar";
 import { NavLink, useLocation } from "react-router-dom";
-import { Legendarios } from "../../asyncMock";
 const Navbar = ({ OnSearch }) => {
 	const location = useLocation();
 	return (
@@ -28,7 +27,8 @@ const Navbar = ({ OnSearch }) => {
 							to="/"
 							style={{ textDecoration: "none", color: "black" }}
 							className={
-								location.pathname === "/"
+								location.pathname === "/" ||
+								location.pathname.includes("pokedex")
 									? "border-bottom border-2 border-danger"
 									: "border border-0"
 							}
@@ -53,9 +53,8 @@ const Navbar = ({ OnSearch }) => {
 						<NavLink
 							style={{ textDecoration: "none", color: "black" }}
 							to={"/legendarios"}
-							className={
-								location.pathname === "/legendarios" ||
-								Legendarios.includes(location.pathname.slice(9))
+							className={({ isActive }) =>
+								isActive
 									? "border-bottom border-2 border-danger"
 									: "border border-0"
 							}

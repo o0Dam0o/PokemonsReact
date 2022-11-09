@@ -11,6 +11,7 @@ const ItemListContainer = () => {
 		() => getProducts(),
 		[pokedexId, paginas]
 	);
+
 	const paginaTotal = Math.ceil(pokemons?.length / 25);
 	if (loading) {
 		return (

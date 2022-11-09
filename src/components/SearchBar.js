@@ -1,26 +1,31 @@
-import { useState, useContext } from "react";
-import { SearchContex } from "../context/SearchContex";
-const SearchBar = () => {
-	const { getSearch } = useContext(SearchContex);
-	const [search, setSearch] = useState("");
+//import { useSearchContex } from "../context/SearchContex";
+//import { useSearchParams } from "react-router-dom";
 
+const SearchBar = () => {
+	/* 	const { getSearch } = useSearchContex();
+	const [search, setSearch] = useSearchParams();
 	const onChange = (e) => {
-		setSearch(e.target.value);
-	};
+		e.preventDefault();
+		if (e.target.value === "") {
+			getSearch("");
+			setSearch("");
+		} else {
+			setSearch({ pokemon: e.target.value });
+		}
+	}; */
 	return (
 		<div className="d-flex" role="search">
 			<input
-				onChange={onChange}
+				//onChange={onChange}
+				//value={search.get("pokemon") ?? ""}
 				className="form-control me-2"
 				type="search"
-				placeholder="Buscar Pokemons.."
+				placeholder="Buscar"
 				aria-label="Search"
 			/>
 			<button
 				className="btn btn-danger"
-				onClick={
-					search.length === 0 ? getSearch(search) : () => getSearch(search)
-				}
+				//onClick={() => getSearch(search.get("pokemon") ?? "")}
 				type="submit"
 			>
 				Buscar

@@ -5,9 +5,9 @@ const Pagination = ({ paginaTotal, pokedexId }) => {
 			<h2>Pokedex</h2>
 			<div className="d-flex align-items-center">
 				<Link
-					to={`/pokedex/${
+					to={`${!pokedexId ? "/" : "/pokedex/"}${
 						!pokedexId
-							? "/"
+							? ""
 							: parseInt(pokedexId) === 1
 							? "1"
 							: parseInt(pokedexId) - 1

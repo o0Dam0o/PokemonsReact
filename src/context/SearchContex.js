@@ -1,19 +1,16 @@
-import React, { createContext, useState } from "react";
-export const SearchContex = createContext();
-
-const SearchContexProvider = ({ children }) => {
+import React, { createContext, useContext, useState } from "react";
+const SearchContex = createContext();
+export const useSearchContex = () => {
+	return useContext(SearchContex);
+};
+export const SearchContexProvider = ({ children }) => {
 	const [searchs, setSearchs] = useState("");
 	const getSearch = (pokemon) => {
-		setSearchs(pokemon.toLowerCase());
-	};
-	const getEncontrado = () => {
-		return searchs;
+		setSearchs(pokemon?.toLowerCase());
 	};
 	return (
-		<SearchContex.Provider value={{ getSearch, getEncontrado }}>
+		<SearchContex.Provider value={{ getSearch, searchs }}>
 			{children}
 		</SearchContex.Provider>
 	);
 };
-
-export default SearchContexProvider;
