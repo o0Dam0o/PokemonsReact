@@ -45,7 +45,5 @@ export const getProduct = (pokemonId) => {
 			});
 	});
 };
-export const getTypes = () => {
-	return new Promise((resolve, reject) => {});
-};
+
 export const getCheckout = () => {};
